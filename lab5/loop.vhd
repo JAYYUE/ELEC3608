@@ -132,7 +132,7 @@ begin
 	branch_imm(12 downto 0) <= unsigned(ir(31) & ir(7) & 
 								ir(30 downto 25) & ir(11 downto 8) & '0');
 
-   decode_proc : process (ir, funct7, funct3, opcode) is
+   decode_proc : process (ir, funct7, funct3, opcode,alu_A,reg_B) is
 	begin
 		regwrite <= '0';
 		op2sel <= "00";
@@ -195,7 +195,7 @@ begin
         regwrite <= '1';
         case (funct3) is
           when BNE => 
-            if(rs1 /= rs2) then
+            if(alu_A /= reg_B) then
                PCsel <= '1';
             else
                null;
